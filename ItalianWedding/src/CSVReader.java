@@ -1,33 +1,32 @@
-import com.opencsv.CSVReaderHeaderAware;
-import com.opencsv.exceptions.CsvValidationException;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 public class CSVReader {
-    public String poop = "Solid Farts";
-    // todo - make this read the csv's into their respective Person[] arrays.
 
-/*  The following method uses beans to read the csv in. Our data should have headers, so we'll probably be able to get away with the simpler, map method.
-
-    List<MyBean> beans = new CsvToBeanBuilder(FileReader("yourfile.csv"))
-            .withType(Visitors.class).build().parse();
-
-    Writer writer = new FileWriter("yourfile.csv");
-    StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
-    beanToCsv.write(beans);
-    writer.close();*/
-
-    public static ArrayList<Person> readCSVData(String filePath) throws IOException, CsvValidationException {
-        Map<String, String> values = new CSVReaderHeaderAware(new FileReader(filePath)).readMap();
-        ArrayList<Person> people = new ArrayList<Person>();
-        for (String key: values.keySet()) {
-            System.out.println(key);
-            System.out.println(values.get(key));
-            }
-        return people;
+    public ArrayList<Person> readCSVData(String filePath) throws IOException {
+        ArrayList<Person> people = new ArrayList<>();
+        Reader reader = new BufferedReader(new FileReader(filePath));
+        CsvToBean<Person> csvReader = new CsvToBeanBuilder(reader)
+                .withType(Person.class)
+                .withSeparator(',')
+                .withIgnoreLeadingWhiteSpace(true)
+                .withIgnoreEmptyLine(true)
+                .build();
+        List<Person> results = csvReader.parse();
+/*
+        for (Person person: results) {
+            System.out.println(person.name);
+            System.out.println(person.Food);
+        }
+*/
+        return (ArrayList<Person>) results;
     }
 }
 
