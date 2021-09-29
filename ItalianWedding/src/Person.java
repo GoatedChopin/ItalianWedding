@@ -1,17 +1,15 @@
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Person implements Comparable<Person>{
 
     public String name;
-    public Map<String,String> QandA;
-    public String[] questions;
+    public ArrayList<String> answers = new ArrayList<>();
     public ArrayList<Person> spouses = new ArrayList<Person>();
 
-    public Person(String name, String[] answers) {
+    public Person(String name, ArrayList<String> answers) {
         this.name = name;
-        for(int i = 0; i < questions.length; i++) {
-            QandA.put(questions[i], answers[i]);
+        for (String answer: answers) {
+            this.answers.add(answer);
         }
         System.out.println(name + " was added");
     }
@@ -19,5 +17,15 @@ public class Person implements Comparable<Person>{
     @Override
     public int compareTo(Person person) {
             return this.name.compareToIgnoreCase(person.name);
+    }
+
+    public void printList() {
+        System.out.println(name);
+        for (Person spouse: spouses) {
+            System.out.println(spouse.name);
+            for (String answer: spouse.answers) {
+                System.out.println(answer);
+            }
+        }
     }
 }
