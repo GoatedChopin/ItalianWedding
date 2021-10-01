@@ -26,7 +26,7 @@ public class Main {
                     int randomIndex = rand.nextInt(phis.size());
                     Person phi = phis.get(randomIndex); // pick a random phi
                     if (containsShorterPeople(sig,phis) > 0) phi = sig.nextShorterPerson(phis); // if there are shorter phis than the sig, replace the random phi with one of them
-                    System.out.println("Adding " + phi.name + " to " + sig.name + "'s spouses " + "(M " + sig.inches + ": F " + phi.inches + ")");
+//                    System.out.println("Adding " + phi.name + " to " + sig.name + "'s spouses " + "(M " + sig.inches + ": F " + phi.inches + ")");
                     sig.spouses.add(phi);
                     phi.spouses.add(sig);
                     afterPhis.add(phi);
@@ -50,6 +50,10 @@ public class Main {
             }
         }
         Collections.sort(labels);
+        FileWriter fileWriter = new FileWriter();
+        for (String label: labels) {
+            fileWriter.writeToFile(label);
+        }
 
         // export labels to a .txt file
     }
