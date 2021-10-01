@@ -1,2 +1,2 @@
 # ItalianWedding
-Makes random matches from two lists of objects and prints labels for each person.
+Takes two csvs and returns matches based on the heights of the men and women.
