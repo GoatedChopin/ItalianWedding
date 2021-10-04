@@ -19,9 +19,25 @@ public class Main {
         Collections.sort(sigs);
         Collections.reverse(sigs);
 
+        
+        Map<String,String> predeterminedPairings = new HashMap<>();
+        // Add pairings here, sig:phi
+        predeterminedPairings.put("Dan Little","Gisselle Fajardo");
+        predeterminedPairings.put("Bailey Gray","Brie Wall ");
+        
+        // Insert loop to pair predetermined matches here, removing the phis from the list just like we would in the normal loop.
+        for (Person sig: sigs) {
+            for (Person phi: phis) {
+                if ((if predeterminedPairings.containsKey(sig.name) && (predeterminedPairings.get(sig.name) == phi.name)) {
+                    sig.spouses.add(phi);
+                    phi.spouses.add(sig);
+                    phis.remove(phi);
+                }
+            }
+        }
         while (phis.size() > 0) {
             for (Person sig: sigs) {
-
+                if (sig.spouses.size() < 2) {
                     Random rand = new Random();
                     int randomIndex = rand.nextInt(phis.size());
                     Person phi = phis.get(randomIndex); // pick a random phi
@@ -31,6 +47,7 @@ public class Main {
                     phi.spouses.add(sig);
                     afterPhis.add(phi);
                     phis.remove(phi);
+                    }
                 }
             }
 /*
@@ -49,18 +66,17 @@ public class Main {
                 labels.add(labelMaker.makeLabel(spouse));
             }
         }
+                    
         Collections.sort(labels);
         FileWriter fileWriter = new FileWriter();
         for (String label: labels) {
             fileWriter.writeToFile(label);
         }
-
-        // export labels to a .txt file
     }
 
 
         public static int containsShorterPeople(Person sig, ArrayList<Person> list) {
-        int shorterPeople = 0;
+            int shorterPeople = 0;
             for (Person person: list) {
                 if (sig.isTaller(person)) shorterPeople++;
             }
